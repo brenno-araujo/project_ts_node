@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_module src/server.ts"
+    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_module src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "@types/node": "^18.0.4",
@@ -13,6 +14,7 @@
     "express": "^4.18.1",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.9.1",
     "typeorm": "^0.2.32",
     "uuidv4": "^6.2.13"
   },
@@ -28,8 +30,8 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1",
-    "ts-node-dev": "^1.1.6",
+    "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.2.3"
+    "typescript": "^4.7.4"
   }
 }
