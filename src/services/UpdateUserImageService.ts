@@ -4,6 +4,7 @@ import path from 'path';
 import uploadConfig from '../config/upload';
 import User from '../models/User';
 import fs from 'fs';
+import AppError from '../errors/AppError';
 
 interface Request {
   user_id: string;
@@ -17,7 +18,7 @@ class UpdateUserImageService {
     const user = await userRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new AppError('User not found');
     }
 
     if (user.image) {
