@@ -16,3 +16,5 @@ yarn-error.log
 /.docker/dbdata
 composer.lock
 node_modules
+tmp/*
+!tmp/.gitkeep

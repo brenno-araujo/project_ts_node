@@ -17,6 +17,9 @@ class User {
   @Column('varchar')
   email: string;
 
+  @Column()
+  image: string;
+
   @Column('varchar')
   password: string;
 
