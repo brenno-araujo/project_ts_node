@@ -14,7 +14,7 @@ class User {
   @Column('varchar')
   name: string;
 
-  @Column('timestamp')
+  @Column('varchar')
   email: string;
 
   @Column('varchar')
