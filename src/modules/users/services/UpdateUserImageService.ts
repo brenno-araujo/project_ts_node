@@ -5,6 +5,7 @@ import uploadConfig from '../../../config/upload';
 import User from '../infra/typeorm/entities/User';
 import fs from 'fs';
 import AppError from '../../../shared/errors/AppError';
+import UsersRepositoryInterface from '../repositories/UsersRepositoryInterface';
 
 interface Request {
   user_id: string;
@@ -12,10 +13,10 @@ interface Request {
 }
 
 class UpdateUserImageService {
-  public async execute({ user_id, image }: Request): Promise<User> {
-    const userRepository = getRepository(User);
+  constructor(private usersRepository: UsersRepositoryInterface) {}
 
-    const user = await userRepository.findOne(user_id);
+  public async execute({ user_id, image }: Request): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('User not found');
@@ -32,7 +33,7 @@ class UpdateUserImageService {
 
     user.image = image;
 
-    await userRepository.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }
