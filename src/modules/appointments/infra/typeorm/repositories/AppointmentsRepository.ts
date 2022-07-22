@@ -6,7 +6,7 @@ import CreateAppointmentDTO from '@modules/appointments/dtos/CreateAppointmentDT
 class AppointmentRepository implements AppointmentsRepositoryInterface {
   private ormRepository: Repository<Appointment>;
 
-  construtor() {
+  constructor() {
     this.ormRepository = getRepository(Appointment);
   }
 

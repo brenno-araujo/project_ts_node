@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import path from 'path';
+import { injectable, inject } from 'tsyringe';
 
 import uploadConfig from '../../../config/upload';
 import User from '../infra/typeorm/entities/User';
@@ -12,8 +13,12 @@ interface Request {
   image: string;
 }
 
+@injectable()
 class UpdateUserImageService {
-  constructor(private usersRepository: UsersRepositoryInterface) {}
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: UsersRepositoryInterface,
+  ) {}
 
   public async execute({ user_id, image }: Request): Promise<User> {
     const user = await this.usersRepository.findById(user_id);

@@ -1,4 +1,5 @@
 import { getRepository, Repository } from 'typeorm';
+
 import UsersRepositoryInterface from '@modules/users/repositories/UsersRepositoryInterface';
 import User from '../entities/User';
 import CreateUserDto from '@modules/users/dtos/CreateUserDto';
@@ -6,7 +7,7 @@ import CreateUserDto from '@modules/users/dtos/CreateUserDto';
 class UsersRepository implements UsersRepositoryInterface {
   private ormRepository: Repository<User>;
 
-  construtor() {
+  constructor() {
     this.ormRepository = getRepository(User);
   }
 

@@ -1,12 +1,16 @@
 import { startOfHour } from 'date-fns';
+import { injectable, inject } from 'tsyringe';
+
 import AppError from '../../../shared/errors/AppError';
 import CreateAppointmentDTO from '../dtos/CreateAppointmentDTO';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
 import AppointmentsRepositoryInterface from '../repositories/AppointmentsRepositoryInterface';
 
+@injectable()
 class CreateAppointmentService {
   constructor(
+    @inject('AppointmentsRepository')
     private appointmentsRepository: AppointmentsRepositoryInterface,
   ) {}
 
