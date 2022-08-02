@@ -16,10 +16,20 @@ export default class FakeUserTokensRepository
       id: uuid(),
       token: uuid(),
       user_id,
+      created_at: new Date(),
+      updated_at: new Date(),
     });
 
     this.UserTokens.push(userToken);
 
     return userToken || undefined;
+  }
+
+  public async findByToken(token: string): Promise<UserToken | undefined> {
+    const findUserToken = this.UserTokens.find(
+      userToken => userToken.token === token,
+    );
+
+    return findUserToken || undefined;
   }
 }

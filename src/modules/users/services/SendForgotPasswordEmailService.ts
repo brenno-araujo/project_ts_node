@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import UsersRepositoryInterface from '../repositories/UsersRepositoryInterface';
 import MailProvider from '../../../shared/container/providers/MailProvider/models/MailProvider';
 import AppError from '../../../shared/errors/AppError';
+import UserTokensRepositoryInterface from '../repositories/UserTokensRepositoryInterface';
 
 interface Request {
   email: string;
@@ -16,16 +17,21 @@ export default class SendForgotPasswordEmailService {
 
     @inject('MailProvider')
     private mailProvider: MailProvider,
+
+    @inject('UserTokensRepository')
+    private userTokensRepository: UserTokensRepositoryInterface,
   ) {}
 
   public async execute({ email }: Request): Promise<void> {
-    const checkEmailExists = await this.usersRepository.findByEmail(email);
+    const user = await this.usersRepository.findByEmail(email);
 
-    if (!checkEmailExists) {
+    if (!user) {
       throw new AppError(
         'Caso exista um usuário com este e-mail, você receberá um e-mail com instruções para recuperar a senha.',
       );
     }
+
+    const userToken = await this.userTokensRepository.generate(user.id);
 
     this.mailProvider.sendMail(
       email,
