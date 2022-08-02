@@ -8,8 +8,8 @@ import './providers';
 import UsersRepositoryInterface from '@modules/users/repositories/UsersRepositoryInterface';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
-// import UserTokensRepositoryInterface from '@modules/users/repositories/UserTokensRepositoryInterface';
-// import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
+import UserTokensRepositoryInterface from '@modules/users/repositories/UserTokensRepositoryInterface';
+import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
 container.registerSingleton<AppointmentsRepositoryInterface>(
   'AppointmentsRepository',
@@ -19,4 +19,9 @@ container.registerSingleton<AppointmentsRepositoryInterface>(
 container.registerSingleton<UsersRepositoryInterface>(
   'UsersRepository',
   UsersRepository,
+);
+
+container.registerSingleton<UserTokensRepositoryInterface>(
+  'UserTokensRepository',
+  UserTokensRepository,
 );
