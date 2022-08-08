@@ -2,8 +2,8 @@ import { container } from 'tsyringe';
 
 import AppointmentsRepositoryInterface from '@modules/appointments/repositories/AppointmentsRepositoryInterface';
 import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
-import '@modules/users/providers/hashProvider/implemetations/BCryptHashProvider';
-import './providers';
+import HashProviderInterface from '@modules/users/providers/hashProvider/models/HashProviderInterface';
+import BcryptHashProvider from '@modules/users/providers/hashProvider/implemetations/BCryptHashProvider';
 
 import UsersRepositoryInterface from '@modules/users/repositories/UsersRepositoryInterface';
 import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
@@ -14,6 +14,11 @@ import UserTokensRepository from '@modules/users/infra/typeorm/repositories/User
 container.registerSingleton<AppointmentsRepositoryInterface>(
   'AppointmentsRepository',
   AppointmentsRepository,
+);
+
+container.registerSingleton<HashProviderInterface>(
+  'HashProvider',
+  BcryptHashProvider,
 );
 
 container.registerSingleton<UsersRepositoryInterface>(

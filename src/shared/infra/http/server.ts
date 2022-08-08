@@ -8,6 +8,7 @@ import '@shared/infra/typeorm';
 
 import AppError from '@shared/errors/AppError';
 import '@shared/container';
+import '@shared/container/providers';
 
 const app = express();
 

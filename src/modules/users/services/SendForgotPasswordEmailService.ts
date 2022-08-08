@@ -1,7 +1,8 @@
 import { injectable, inject } from 'tsyringe';
+import path from 'path';
 
 import UsersRepositoryInterface from '../repositories/UsersRepositoryInterface';
-import MailProvider from '../../../shared/container/providers/MailProvider/models/MailProvider';
+import MailProviderInterface from '../../../shared/container/providers/MailProvider/models/MailProviderInterface';
 import AppError from '../../../shared/errors/AppError';
 import UserTokensRepositoryInterface from '../repositories/UserTokensRepositoryInterface';
 
@@ -15,8 +16,8 @@ export default class SendForgotPasswordEmailService {
     @inject('UsersRepository')
     private usersRepository: UsersRepositoryInterface,
 
-    @inject('MailProvider')
-    private mailProvider: MailProvider,
+    @inject('MailProviderTest')
+    private mailProviderInterface: MailProviderInterface,
 
     @inject('UserTokensRepository')
     private userTokensRepository: UserTokensRepositoryInterface,
@@ -33,9 +34,26 @@ export default class SendForgotPasswordEmailService {
 
     const { token } = await this.userTokensRepository.generate(user.id);
 
-    await this.mailProvider.sendMail(
-      email,
-      `Pedido de recuperação de senha recebido: ${token}`,
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password.hbs',
     );
+
+    await this.mailProviderInterface.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[GoBarber] Recuperação de senha',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: user.name,
+          url: 'http://localhost:3000/reset_password?token=${token}',
+        },
+      },
+    });
   }
 }
